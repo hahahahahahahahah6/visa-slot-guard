@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Visa Slot Guard</title>
+<link rel="stylesheet" href="popup.css">
+</head>
+<body>
+<header>
+  <h1>Visa Slot Guard</h1>
+  <div id="stateBadge" class="badge">…</div>
+</header>
+
+<section id="tierCard" class="card">
+  <div class="row space">
+    <strong id="tierLabel">Free</strong>
+    <button id="upgradeBtn" class="secondary">Upgrade</button>
+  </div>
+  <p id="tierNote" class="muted"></p>
+</section>
+
+<section class="card">
+  <h2>Monitor</h2>
+  <label>Consulate
+    <select id="consulate">
+      <option value="">— choose —</option>
+      <option>SHENYANG</option><option>BEIJING</option><option>GUANGZHOU</option>
+      <option>SHANGHAI</option><option>WUHAN</option><option>HONG KONG</option>
+    </select>
+  </label>
+  <div class="row">
+    <label>From <input type="date" id="dateFrom"></label>
+    <label>To <input type="date" id="dateTo"></label>
+  </div>
+  <label>Check every (minutes)
+    <input type="number" id="intervalMin" min="5" max="120" step="5">
+  </label>
+  <p id="intervalLock" class="muted hidden">Custom intervals are Premium. Free checks hourly.</p>
+  <div class="row">
+    <label class="check"><input type="checkbox" id="soundAlert"> Sound</label>
+    <label class="check"><input type="checkbox" id="desktopAlert"> Desktop alert</label>
+  </div>
+  <div class="row">
+    <label class="check"><input type="checkbox" id="autoReopenTab"> Reopen portal tab if closed</label>
+  </div>
+  <div class="row">
+    <label class="check"><input type="checkbox" id="paused"> Pause monitoring</label>
+  </div>
+</section>
+
+<section class="card" id="premiumCard">
+  <h2>Premium helpers</h2>
+  <div class="row">
+    <label class="check"><input type="checkbox" id="qlEnabled"> Quick Login (auto re-login)</label>
+  </div>
+  <div id="qlFields" class="hidden">
+    <label>Username <input type="text" id="qlUser" autocomplete="off"></label>
+    <label>Password <input type="password" id="qlPass" autocomplete="off"></label>
+    <label>Security answers (comma-separated, optional)
+      <input type="text" id="qlAnswers" autocomplete="off" placeholder="answer1, answer2, answer3">
+    </label>
+    <p class="muted small">Stored ONLY on this device (chrome.storage.local). Never sent anywhere.
+      Anyone with access to this browser profile could read them — use only on your own computer.</p>
+  </div>
+  <div class="row">
+    <label class="check"><input type="checkbox" id="abEnabled"> Auto-book matching slot (auto-select + submit)</label>
+  </div>
+  <p class="muted small">Auto-book clicks through the portal for you when a match is found.
+    It stops and tells you if a human-verification check appears. It cannot guarantee a slot.</p>
+  <p id="premiumLock" class="muted hidden">Quick Login and Auto-book are Premium features.</p>
+</section>
+
+<section class="card">
+  <h2>Session health</h2>
+  <div class="row">
+    <button id="checkNow">Check now</button>
+    <button id="testSound" class="secondary">Test sound</button>
+  </div>
+  <p class="muted small">Last check: <span id="lastCheck">never</span> · Last result: <span id="lastResult">—</span></p>
+  <ul id="healthLog" class="log"></ul>
+</section>
+
+<section class="card">
+  <h2>Billing</h2>
+  <p class="muted small" id="billingNote"></p>
+  <label>Stripe publishable key (self-hosted)
+    <input type="text" id="stripeKey" placeholder="pk_live_…" autocomplete="off">
+  </label>
+  <label>Billing server URL
+    <input type="text" id="billingServer" placeholder="https://…" autocomplete="off">
+  </label>
+</section>
+
+<footer>
+  <button id="save" class="primary">Save settings</button>
+  <span id="savedMsg" class="muted hidden">Saved ✓</span>
+</footer>
+
+<script src="../lib/storage.js"></script>
+<script src="../lib/tiers.js"></script>
+<script src="../lib/billing/provider.js"></script>
+<script src="../lib/billing/stripe-stub.js"></script>
+<script src="popup.js"></script>
+</body>
+</html>
